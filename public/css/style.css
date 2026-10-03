@@ -281,11 +281,49 @@ section { padding: 2.5rem 0; }
   filter: drop-shadow(0 0 0.4rem rgba(18, 11, 46, 0.9));
   animation: spud-fall var(--time) linear var(--delay) infinite;
   will-change: transform;
+  overflow: visible; /* the jump below may leave the potato's own box */
 }
 @keyframes spud-fall {
   from { transform: translate3d(0, -8rem, 0) rotate(0deg); }
   to   { transform: translate3d(var(--drift), calc(100vh + 8rem), 0) rotate(var(--spin)); }
 }
+/* Clicked potato (class set by js/potatoes.js): squash, jump with a spin, land.
+   The jump runs on the drawing inside, so the fall on .spud carries on. */
+.spud use { transform-box: fill-box; transform-origin: 50% 60%; }
+.spud.is-popped use { animation: spud-pop 0.7s ease-out; }
+@keyframes spud-pop {
+  0%   { transform: scale(1, 1); }
+  15%  { transform: scale(1.35, 0.65); }
+  45%  { transform: translateY(-45%) scale(0.85, 1.2) rotate(200deg); }
+  75%  { transform: translateY(0) scale(1.2, 0.8) rotate(360deg); }
+  100% { transform: scale(1, 1) rotate(360deg); }
+}
+/* Sparkles and the word that fly off a clicked potato */
+.spud-spark,
+.spud-word {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  color: var(--star);
+}
+.spud-spark { font-size: 1.1rem; animation: spud-spark 0.6s ease-out forwards; }
+.spud-word {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  text-shadow: 0 2px 0 var(--russet), 0 0 0.5rem var(--space);
+  animation: spud-word 0.9s ease-out forwards;
+}
+@keyframes spud-spark {
+  to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3) rotate(180deg); opacity: 0; }
+}
+@keyframes spud-word {
+  0%   { transform: translate(-50%, -50%) scale(0.4) rotate(-8deg); opacity: 0; }
+  25%  { transform: translate(-50%, -160%) scale(1.15) rotate(-8deg); opacity: 1; }
+  100% { transform: translate(-50%, -280%) scale(1) rotate(-8deg); opacity: 0; }
+}
+
 /* Text and cards stay in front of the potatoes */
 .site-header,
 main > section,
@@ -303,4 +341,7 @@ main > section,
   * { transition: none !important; scroll-behavior: auto !important; }
   /* Potatoes stay still, scattered over the page */
   .spud { animation: none; top: var(--rest); }
+  /* A clicked potato still pulls its surprised face, but nothing jumps or flies */
+  .spud.is-popped use { animation: none; }
+  .spud-spark, .spud-word { display: none; }
 }

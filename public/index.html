@@ -17,32 +17,49 @@
   <!-- Inline emoji favicon: no extra file, no 404 for /favicon.ico -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%94%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
+  <!-- defer: runs after the page is parsed, never blocks rendering -->
+  <script src="js/potatoes.js" defer></script>
 </head>
 <body>
   <!-- Lets keyboard users skip the navigation -->
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Potato drawing, defined once and reused by every falling potato below -->
+  <!-- Potato drawing, defined once and reused by every falling potato below.
+       Two faces: #potato (happy) and #potato-wow (surprised, shown when clicked). -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="potato" viewBox="0 -8 100 108">
-      <path d="M50 10 C47 2 54 -5 62 -2 C62 6 56 10 50 10 Z" fill="#7cc36a" stroke="#3f7a35" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M50 8 C72 6 92 22 92 48 C94 72 76 93 50 92 C26 94 7 76 9 50 C7 26 26 9 50 8 Z" fill="var(--skin)" stroke="var(--line)" stroke-width="4"/>
-      <g fill="var(--line)" opacity="0.3">
-        <ellipse cx="27" cy="30" rx="5" ry="3.5"/>
-        <ellipse cx="72" cy="27" rx="4" ry="3"/>
-        <ellipse cx="68" cy="78" rx="5" ry="3.5"/>
-        <ellipse cx="30" cy="76" rx="3.5" ry="2.5"/>
+    <defs>
+      <g id="potato-body">
+        <path d="M50 10 C47 2 54 -5 62 -2 C62 6 56 10 50 10 Z" fill="#7cc36a" stroke="#3f7a35" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M50 8 C72 6 92 22 92 48 C94 72 76 93 50 92 C26 94 7 76 9 50 C7 26 26 9 50 8 Z" fill="var(--skin)" stroke="var(--line)" stroke-width="4"/>
+        <g fill="var(--line)" opacity="0.3">
+          <ellipse cx="27" cy="30" rx="5" ry="3.5"/>
+          <ellipse cx="72" cy="27" rx="4" ry="3"/>
+          <ellipse cx="68" cy="78" rx="5" ry="3.5"/>
+          <ellipse cx="30" cy="76" rx="3.5" ry="2.5"/>
+        </g>
+        <ellipse cx="28" cy="58" rx="6" ry="3.5" fill="#ff7a7a" opacity="0.7"/>
+        <ellipse cx="72" cy="58" rx="6" ry="3.5" fill="#ff7a7a" opacity="0.7"/>
       </g>
+    </defs>
+    <symbol id="potato" viewBox="0 -8 100 108">
+      <use href="#potato-body"/>
       <circle cx="38" cy="48" r="4.5" fill="#2b1608"/>
       <circle cx="62" cy="48" r="4.5" fill="#2b1608"/>
       <path d="M43 58 Q50 66 57 58" fill="none" stroke="#2b1608" stroke-width="3" stroke-linecap="round"/>
-      <ellipse cx="28" cy="58" rx="6" ry="3.5" fill="#ff7a7a" opacity="0.7"/>
-      <ellipse cx="72" cy="58" rx="6" ry="3.5" fill="#ff7a7a" opacity="0.7"/>
+    </symbol>
+    <symbol id="potato-wow" viewBox="0 -8 100 108">
+      <use href="#potato-body"/>
+      <circle cx="37" cy="46" r="7" fill="#fff"/>
+      <circle cx="63" cy="46" r="7" fill="#fff"/>
+      <circle cx="37" cy="46" r="3.5" fill="#2b1608"/>
+      <circle cx="63" cy="46" r="3.5" fill="#2b1608"/>
+      <ellipse cx="50" cy="64" rx="5" ry="6.5" fill="#2b1608"/>
     </symbol>
   </svg>
 
   <!-- Falling potatoes: decoration only, hidden from screen readers.
-       Each one sets its own position, size, speed and colour; the motion is in style.css. -->
+       Each one sets its own position, size, speed and colour; the motion is in style.css.
+       Clicking one makes it jump (js/potatoes.js). -->
   <div class="potato-sky" aria-hidden="true">
     <svg class="spud" style="--x:4%;--size:5.25rem;--time:30s;--delay:-3s;--drift:5vw;--spin:220deg;--rest:12%;--skin:#c58b4e;--line:#7a4a22"><use href="#potato"/></svg>
     <svg class="spud" style="--x:17%;--size:3rem;--time:22s;--delay:-14s;--drift:-3vw;--spin:-300deg;--rest:58%;--skin:#8d62c4;--line:#4b2c7c"><use href="#potato"/></svg>
