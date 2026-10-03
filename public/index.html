@@ -22,6 +22,44 @@
   <!-- Lets keyboard users skip the navigation -->
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- Potato drawing, defined once and reused by every falling potato below -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="potato" viewBox="0 -8 100 108">
+      <path d="M50 10 C47 2 54 -5 62 -2 C62 6 56 10 50 10 Z" fill="#7cc36a" stroke="#3f7a35" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M50 8 C72 6 92 22 92 48 C94 72 76 93 50 92 C26 94 7 76 9 50 C7 26 26 9 50 8 Z" fill="var(--skin)" stroke="var(--line)" stroke-width="4"/>
+      <g fill="var(--line)" opacity="0.3">
+        <ellipse cx="27" cy="30" rx="5" ry="3.5"/>
+        <ellipse cx="72" cy="27" rx="4" ry="3"/>
+        <ellipse cx="68" cy="78" rx="5" ry="3.5"/>
+        <ellipse cx="30" cy="76" rx="3.5" ry="2.5"/>
+      </g>
+      <circle cx="38" cy="48" r="4.5" fill="#2b1608"/>
+      <circle cx="62" cy="48" r="4.5" fill="#2b1608"/>
+      <path d="M43 58 Q50 66 57 58" fill="none" stroke="#2b1608" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="28" cy="58" rx="6" ry="3.5" fill="#ff7a7a" opacity="0.7"/>
+      <ellipse cx="72" cy="58" rx="6" ry="3.5" fill="#ff7a7a" opacity="0.7"/>
+    </symbol>
+  </svg>
+
+  <!-- Falling potatoes: decoration only, hidden from screen readers.
+       Each one sets its own position, size, speed and colour; the motion is in style.css. -->
+  <div class="potato-sky" aria-hidden="true">
+    <svg class="spud" style="--x:4%;--size:5.25rem;--time:30s;--delay:-3s;--drift:5vw;--spin:220deg;--rest:12%;--skin:#c58b4e;--line:#7a4a22"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:17%;--size:3rem;--time:22s;--delay:-14s;--drift:-3vw;--spin:-300deg;--rest:58%;--skin:#8d62c4;--line:#4b2c7c"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:29%;--size:4.125rem;--time:34s;--delay:-22s;--drift:4vw;--spin:160deg;--rest:82%;--skin:#b5583a;--line:#6e2c1a"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:43%;--size:2.625rem;--time:24s;--delay:-8s;--drift:-4vw;--spin:340deg;--rest:30%;--skin:#e0b56a;--line:#8c6226"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:56%;--size:4.5rem;--time:28s;--delay:-18s;--drift:3vw;--spin:-200deg;--rest:68%;--skin:#c58b4e;--line:#7a4a22"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:69%;--size:3.375rem;--time:20s;--delay:-1s;--drift:-5vw;--spin:280deg;--rest:18%;--skin:#8d62c4;--line:#4b2c7c"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:81%;--size:6rem;--time:36s;--delay:-27s;--drift:-3vw;--spin:-140deg;--rest:46%;--skin:#b5583a;--line:#6e2c1a"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:91%;--size:3rem;--time:25s;--delay:-11s;--drift:-6vw;--spin:320deg;--rest:88%;--skin:#e0b56a;--line:#8c6226"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:36%;--size:3.75rem;--time:32s;--delay:-29s;--drift:6vw;--spin:-260deg;--rest:5%;--skin:#c58b4e;--line:#7a4a22"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:75%;--size:2.625rem;--time:23s;--delay:-17s;--drift:2vw;--spin:240deg;--rest:76%;--skin:#e0b56a;--line:#8c6226"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:11%;--size:3.75rem;--time:27s;--delay:-20s;--drift:3vw;--spin:-180deg;--rest:38%;--skin:#e0b56a;--line:#8c6226"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:23%;--size:4.5rem;--time:33s;--delay:-9s;--drift:-4vw;--spin:200deg;--rest:24%;--skin:#c58b4e;--line:#7a4a22"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:49%;--size:5.25rem;--time:38s;--delay:-33s;--drift:5vw;--spin:-120deg;--rest:92%;--skin:#8d62c4;--line:#4b2c7c"><use href="#potato"/></svg>
+    <svg class="spud" style="--x:62%;--size:3.25rem;--time:26s;--delay:-6s;--drift:-2vw;--spin:300deg;--rest:40%;--skin:#b5583a;--line:#6e2c1a"><use href="#potato"/></svg>
+  </div>
+
   <header class="site-header">
     <a class="wordmark" href="index.html">Potato Galaxy</a>
     <nav class="site-nav" aria-label="Main">
@@ -62,7 +100,10 @@
 
   <footer class="site-footer">
     <span>&copy; 2026 Potato Galaxy</span>
-    <a href="privacy.html">Privacy policy</a>
+    <span class="footer-links">
+      <a href="privacy.html">Privacy policy</a>
+      <a href="terms.html">Terms of service</a>
+    </span>
   </footer>
 </body>
 </html>

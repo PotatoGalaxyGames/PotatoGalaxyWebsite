@@ -8,6 +8,16 @@
  *  - Add screenshot styles (.shots) when game screenshots exist.
  */
 
+/* ---------- Display font ---------- */
+/* Fredoka (SIL Open Font License), served from this site: no external requests,
+   so no cookie/GDPR issues. Used for headings, buttons and labels only. */
+@font-face {
+  font-family: "Fredoka";
+  src: url("../fonts/fredoka-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap; /* text shows in the fallback font while this loads */
+}
+
 /* ---------- Design tokens ---------- */
 :root {
   --space:   #120b2e; /* page background, deep space */
@@ -18,9 +28,12 @@
   --cream:   #f3e9dc; /* main text */
   --dim:     #b9aecf; /* secondary text */
 
-  /* System rounded fonts only: no external requests, so no cookie/GDPR issues */
+  /* Body text: system rounded fonts */
   --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN",
           "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* Headings, buttons, labels: chunky rounded display font */
+  --display: "Fredoka", ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN",
+             "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
 
   --measure: 62ch; /* max line length for body text */
   --gutter: clamp(1rem, 4vw, 2.5rem);
@@ -67,9 +80,10 @@ a:hover { color: var(--cream); }
 
 /* ---------- Typography ---------- */
 h1, h2, h3 {
-  font-weight: 800;
+  font-family: var(--display);
+  font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0 0 0.5em;
 }
 h1 { font-size: clamp(2.5rem, 7vw, 4.75rem); }
@@ -100,7 +114,8 @@ p { margin: 0 0 1em; max-width: var(--measure); }
 }
 .wordmark {
   color: var(--cream);
-  font-weight: 800;
+  font-family: var(--display);
+  font-weight: 700;
   font-size: 1.25rem;
   text-decoration: none;
 }
@@ -140,7 +155,11 @@ section { padding: 2.5rem 0; }
   z-index: 1;
   padding-bottom: 1.5rem;
 }
-.hero-text h1 { margin-bottom: 0.15em; }
+/* Chunky drop shadow, like a game title */
+.hero-text h1 {
+  margin-bottom: 0.15em;
+  text-shadow: 0 0.07em 0 var(--russet), 0 0.14em 0.25em rgba(0, 0, 0, 0.5);
+}
 .hero-text p { margin: 0; font-size: 1.3rem; color: var(--cream); }
 
 /* ---------- Game list entry ---------- */
@@ -149,6 +168,7 @@ section { padding: 2.5rem 0; }
   border-radius: 18px;
   padding: 1.5rem;
   max-width: 40rem;
+  background: rgba(42, 26, 94, 0.8); /* potatoes pass behind the card and show through faintly */
 }
 .game h3 { margin-bottom: 0.25em; }
 .game p { margin-bottom: 1em; }
@@ -160,8 +180,9 @@ section { padding: 2.5rem 0; }
   color: var(--star);
   border-radius: 999px;
   padding: 0.1rem 0.8rem;
+  font-family: var(--display);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.75rem;
 }
 
@@ -171,13 +192,19 @@ section { padding: 2.5rem 0; }
   display: inline-block;
   background: var(--tater);
   color: var(--space);
-  font-weight: 800;
+  font-family: var(--display);
+  font-weight: 700;
   text-decoration: none;
   padding: 0.7rem 1.4rem;
   border-radius: 12px;
+  /* Solid lower edge so the button looks like a pressable game button */
+  box-shadow: 0 4px 0 var(--russet);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 .btn:hover,
-.store-btn:hover { background: var(--star); color: var(--space); }
+.store-btn:hover { background: var(--star); color: var(--space); transform: translateY(-2px); box-shadow: 0 6px 0 var(--russet); }
+.btn:active,
+.store-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--russet); }
 
 .store-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.25rem 0; }
 
@@ -187,12 +214,15 @@ section { padding: 2.5rem 0; }
   color: var(--dim);
   border: 2px dashed var(--nebula);
   cursor: not-allowed;
+  box-shadow: none;
 }
-.store-btn[aria-disabled="true"]:hover { background: transparent; color: var(--dim); }
+.store-btn[aria-disabled="true"]:hover,
+.store-btn[aria-disabled="true"]:active { background: transparent; color: var(--dim); transform: none; box-shadow: none; }
 
 /* ---------- Text pages (game detail, privacy, 404) ---------- */
 .page-head { padding-top: 2rem; }
 .prose h2 { margin-top: 1.75em; }
+.prose h3 { margin-top: 1.5em; }
 .prose ul { max-width: var(--measure); padding-left: 1.25rem; }
 
 /* TODO markers in the privacy template so unfinished parts stand out */
@@ -217,10 +247,60 @@ section { padding: 2.5rem 0; }
   justify-content: space-between;
   gap: 0.5rem 1.5rem;
 }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
 .site-footer a { color: var(--dim); }
 .site-footer a:hover { color: var(--cream); }
+
+/* ---------- Falling potatoes (home page background) ---------- */
+/* Decorative only: covers the whole screen, in front of the banner image
+   but behind the text, and ignores the mouse */
+.potato-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  /* A few faint stars */
+  background-image:
+    radial-gradient(circle, rgba(255, 215, 106, 0.7) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(243, 233, 220, 0.5) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(185, 174, 207, 0.5) 0 1.5px, transparent 2.5px);
+  background-size: 17rem 19rem, 11rem 13rem, 23rem 29rem;
+  background-position: 2rem 3rem, 7rem 9rem, 12rem 1rem;
+}
+/* Each potato sets --x, --size, --time, --delay, --drift, --spin, --rest,
+   --skin and --line in its style attribute (see index.html) */
+.spud {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: var(--size);
+  height: calc(var(--size) * 1.08);
+  opacity: 0.95;
+  /* Dark halo so a potato stands out from the banner art behind it */
+  filter: drop-shadow(0 0 0.4rem rgba(18, 11, 46, 0.9));
+  animation: spud-fall var(--time) linear var(--delay) infinite;
+  will-change: transform;
+}
+@keyframes spud-fall {
+  from { transform: translate3d(0, -8rem, 0) rotate(0deg); }
+  to   { transform: translate3d(var(--drift), calc(100vh + 8rem), 0) rotate(var(--spin)); }
+}
+/* Text and cards stay in front of the potatoes */
+.site-header,
+main > section,
+.site-footer { position: relative; z-index: 2; }
+.hero-text { z-index: 2; }
+
+/* Fewer potatoes on small screens */
+@media (max-width: 40rem) {
+  .spud:nth-child(n+8) { display: none; }
+  .spud { width: calc(var(--size) * 0.7); height: calc(var(--size) * 0.76); }
+}
 
 /* ---------- Reduced motion: no transitions or smooth scrolling ---------- */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
+  /* Potatoes stay still, scattered over the page */
+  .spud { animation: none; top: var(--rest); }
 }
