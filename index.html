@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+  Purpose: Home page for potatogalaxy.com. Shows the hero art and the list of games.
+
+  TODO:
+   - Add Open Graph tags (og:title, og:image, og:url) once the final domain
+     form (apex or www) is decided, so link previews work when shared.
+   - Add each new game as another <article class="game"> in the Games section.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Potato Galaxy | Mobile games for iPhone and Android</title>
+  <meta name="description" content="Potato Galaxy makes mobile games for iPhone and Android. Next up: Potato Galaxy Sudoku, a puppy-themed sudoku game.">
+  <meta name="theme-color" content="#120b2e">
+  <!-- Inline emoji favicon: no extra file, no 404 for /favicon.ico -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%94%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Lets keyboard users skip the navigation -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="wordmark" href="index.html">Potato Galaxy</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="index.html#games">Games</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Hero: the illustration is the first thing visitors see -->
+    <div class="hero">
+      <!-- alt text describes the image for screen readers and shows if the file fails to load -->
+      <img src="images/hero.jpg" width="1408" height="768"
+           alt="Cartoon potato planets with smiling faces floating in a colorful galaxy, with a small astronaut flying a potato-shaped rocket.">
+      <div class="hero-text">
+        <div class="wrap">
+          <h1>Potato Galaxy</h1>
+          <p>Mobile games for iPhone and Android.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Games list -->
+    <section id="games" class="wrap">
+      <h2>Games</h2>
+
+      <article class="game">
+        <span class="status">In development</span>
+        <h3>Potato Galaxy Sudoku</h3>
+        <p>A sudoku game with a puppy theme.</p>
+        <a class="btn" href="games/potato-galaxy-sudoku.html">See the game</a>
+      </article>
+
+      <p style="margin-top:1.5rem;color:var(--dim)">More games are on the way.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Potato Galaxy</span>
+    <a href="privacy.html">Privacy policy</a>
+  </footer>
+</body>
+</html>

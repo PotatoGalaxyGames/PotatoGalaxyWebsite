@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+  Purpose: Custom "page not found" page. Cloudflare Pages serves a 404.html
+  from the site root automatically for unknown URLs.
+
+  TODO:
+   - If you move to a host that does not serve 404.html automatically,
+     check its docs for the setting that does.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found | Potato Galaxy</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#120b2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%94%3C/text%3E%3C/svg%3E">
+  <!-- Absolute paths on purpose: this page can be served from any URL depth -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="/">Potato Galaxy</a>
+  </header>
+
+  <main class="wrap page-head">
+    <h1>Page not found</h1>
+    <p class="lede">This page does not exist or has moved.</p>
+    <a class="btn" href="/">Go to the home page</a>
+  </main>
+
+  <footer class="site-footer">
+    <span>&copy; 2026 Potato Galaxy</span>
+    <a href="/privacy.html">Privacy policy</a>
+  </footer>
+</body>
+</html>
