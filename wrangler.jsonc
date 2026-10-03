@@ -1,0 +1,17 @@
+// Purpose: Cloudflare Workers config for potatogalaxy.com (static site only).
+// TODO: add "routes" here if you want the custom domain managed in code.
+{
+  // Worker name; must match the project name in Cloudflare
+  "name": "potatogalaxywebsite",
+
+  // Runtime behavior date for the Workers platform
+  "compatibility_date": "2026-10-01",
+
+  "assets": {
+    // Publish only this folder, never the repo root (.git stays private)
+    "directory": "./public",
+
+    // Serve 404.html with a 404 status for unknown URLs
+    "not_found_handling": "404-page"
+  }
+}
